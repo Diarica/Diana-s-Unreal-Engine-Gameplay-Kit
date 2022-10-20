@@ -36,11 +36,15 @@ public:
 		}
 	}
 
-	static void PlayMontage(UAnimInstance * Instance,UAnimMontage* MontageToPlay, float InPlayRate = 1.f, EMontagePlayReturnType ReturnValueType = EMontagePlayReturnType::MontageLength, float InTimeToStartMontageAt=0.f, bool bStopAllMontages = true)
+	static void PlayMontage(UAnimInstance * Instance,UAnimMontage* MontageToPlay, float InPlayRate = 1.f, EMontagePlayReturnType ReturnValueType = EMontagePlayReturnType::MontageLength, float InTimeToStartMontageAt=0.f, bool bStopAllMontages = true,FName SectionName ="")
 	{
 		if(Instance && MontageToPlay)
 		{
 			Instance->Montage_Play(MontageToPlay,InPlayRate,ReturnValueType,InTimeToStartMontageAt,bStopAllMontages);
+			if(SectionName.IsNone())
+			{
+				Instance->Montage_JumpToSection(SectionName,MontageToPlay);
+			}
 		}
 	}
 
