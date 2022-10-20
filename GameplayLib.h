@@ -35,6 +35,21 @@ public:
 		}
 	}
 
+	static void AttachActorToMesh(USkeletalMeshComponent * ParentMesh,AActor * ActorToAttached,FName &SocketName)
+	{
+		if(ParentMesh ==nullptr || ActorToAttached == nullptr)
+		{
+			ActorToAttached->AttachToComponent(ParentMesh,FAttachmentTransformRules::SnapToTargetIncludingScale,SocketName);
+		}
+	}
+
+	static void AttachActorToMesh(UStaticMeshComponent * ParentMesh,AActor * ActorToAttached,FName &SocketName)
+	{
+		if(ParentMesh == nullptr || ActorToAttached == nullptr)
+		{
+			ActorToAttached->AttachToComponent(ParentMesh,FAttachmentTransformRules::SnapToTargetIncludingScale,SocketName);
+		}
+	}
 	
 
 	template<typename T>
@@ -98,6 +113,7 @@ public:
 			
 		}
 	}
+	
 
 	
 };
