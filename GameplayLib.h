@@ -39,16 +39,22 @@ public:
 	{
 		if(ParentMesh ==nullptr || ActorToAttached == nullptr)
 		{
-			ActorToAttached->AttachToComponent(ParentMesh,FAttachmentTransformRules::SnapToTargetIncludingScale,SocketName);
+			return;
+			
 		}
+
+		ActorToAttached->AttachToComponent(ParentMesh,FAttachmentTransformRules::SnapToTargetIncludingScale,SocketName);
 	}
 
 	static void AttachActorToMesh(UStaticMeshComponent * ParentMesh,AActor * ActorToAttached,FName &SocketName)
 	{
 		if(ParentMesh == nullptr || ActorToAttached == nullptr)
 		{
-			ActorToAttached->AttachToComponent(ParentMesh,FAttachmentTransformRules::SnapToTargetIncludingScale,SocketName);
+
+			return;
+			
 		}
+		ActorToAttached->AttachToComponent(ParentMesh,FAttachmentTransformRules::SnapToTargetIncludingScale,SocketName);
 	}
 	
 
@@ -63,6 +69,8 @@ public:
 
 		return 0;
 	}
+
+	
 
 	static void PlayParticleAttached(UParticleSystem * ParticleToSpawn,USceneComponent * ObjectToAttach,FName& AttachPointName, FVector Location = FVector(ForceInit), FRotator Rotation = FRotator::ZeroRotator, FVector Scale = FVector(1.f), EAttachLocation::Type LocationType = EAttachLocation::KeepRelativeOffset,bool bAutoActivate=true,bool bUsePooling = true)
 	{
@@ -113,6 +121,11 @@ public:
 			
 		}
 	}
+
+
+	
+
+	
 	
 
 	
