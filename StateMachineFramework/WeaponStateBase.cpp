@@ -12,6 +12,7 @@ void UWeaponStateBase::Initialize(AWeaponBase* _ownerWeapon)
 
 void UWeaponStateBase::OnStateEnter()
 {
+	
 	if(OwnerWeapon == nullptr)
 	{
 		return;

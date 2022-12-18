@@ -5,16 +5,16 @@
 #include "CoreMinimal.h"
 #include "FSMComponent.h"
 #include "Components/ActorComponent.h"
-#include "WeaponStateBase.h"
 #include "WeaponFSMComponent.generated.h"
 UENUM()
 enum class EWeaponState
 {
-	EWS_UnOccupied,
-	EWS_Fire,
-	EWS_Reload,
-	EWS_Swap,
-	EWS_TryFire
+	EWS_UnOccupied = 0,
+	EWS_Fire = 1,
+	EWS_Reload = 2,
+	EWS_Swap = 3,
+	EWS_TryFire = 4,
+	EWS_ColdDown = 5,
 	
 };
 
@@ -24,15 +24,13 @@ class FLATLINE_API UWeaponFSMComponent : public UFSMComponent
 {
 	
 	GENERATED_BODY()
-
 	
-	TMap<EWeaponState,UWeaponStateBase*> StateMap;
-
-	EWeaponState CurrentState;
+	EWeaponState CurrentStateType;
 	
 public:
 	// Sets default values for this component's properties
 	UWeaponFSMComponent();
+
 	
 	EWeaponState GetCurrentState();
 

@@ -3,47 +3,36 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "StateBase.h"
+#include "CharacterStates/CharacterStateBase.h"
 #include "Components/ActorComponent.h"
+#include "CharacterFSMComponent.generated.h"
 
-#include "FSMComponent.generated.h"
 
-
+enum class EMovementState : uint8;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class FLATLINE_API UFSMComponent : public UActorComponent
+class FLATLINE_API UCharacterFSMComponent : public UFSMComponent
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
-	UStateBase* CurrentState = nullptr;
 
-	UPROPERTY()
-	TMap<int,UStateBase*> StatesMap;
 
-	int CurrentStateID = -100;
+	UPROPERTY(BlueprintReadOnly,meta=(AllowPrivateAccess = "true"))
+	EMovementState CurrentStateType;
+
 
 	
 
 public:
 	// Sets default values for this component's properties
-	UFSMComponent();
+	UCharacterFSMComponent();
 
-	void SwitchState(int newStateID);
+	EMovementState GetCurrentState() const;
 
-	void AddState(int ID,UStateBase * StateClass);
-
-	int GetCurrentStateID() const
-	{
-		return CurrentStateID;
-	}
-
-	
+	void SetCurrentState(EMovementState State);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	void SwitchOn(int newStateID);
 
 public:
 	// Called every frame
