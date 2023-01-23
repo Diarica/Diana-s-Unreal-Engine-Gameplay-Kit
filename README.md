@@ -1,6 +1,4 @@
-# UnrealEngineUtils
-UnrealEngine Gameplay Utils
+# Diana's Unreal Engine Gameplay Kit
+Diana's Unreal Engine Gameplay Kit
 
-Please just copy the functions,do not copy full code.
-
-In the future,I will update more and more util functions to this project.
+I'm lazy so don't use plugin system
