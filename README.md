@@ -2,7 +2,6 @@
 Diana's Unreal Engine Gameplay Kit
 
 
-CAUTION! UI Manager is dependent on LocalMessage and Stack State Machine!
-If you gonna use it in your project,Remember to add dependcies of "UMG" and "GameplayTags" (YOURPROJECT.build.cs)
+Gameplay Message is an actor-component Gameplay tag based message system,Which is flexible and also support struct params,blueprint tasks to broadcast/register messages.
 
-I'm lazy so don't use plugin system
+CAUTION: If you gonna use stack tag UI Manager in your project,you need also add gameplay message plugin in your project to support UI Messages.Or manually remove the dependency of Gameplay Message Processor(Sorry for that)
