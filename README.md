@@ -8,7 +8,7 @@ Gameplay Message is an actor-component gameplay tag based message system,Which i
 
 StackUIManager is an actor-component and gameplay tag based stack state machine UI manager.Add to your APlayerController only.Which is easy to use.(Blueprint ready)
 
-![image](StackTagUIManager.png)
+![image](StackUIManager.png)
 
 
 ---- NOT RECOMMENDED ----
