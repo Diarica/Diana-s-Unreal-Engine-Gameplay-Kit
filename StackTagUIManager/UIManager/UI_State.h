@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "FLATCore/Framework/StackStateMachine/StackStateInterface.h"
 #include "UObject/Object.h"
 #include "UI_State.generated.h"
 
@@ -14,7 +15,7 @@
  * 
  */
 UCLASS()
-class UUI_State : public UUserWidget,public IStackStateInterface
+class FLATCORE_API UUI_State : public UUserWidget,public IStackStateInterface
 {
 	GENERATED_BODY()
 
@@ -23,7 +24,7 @@ class UUI_State : public UUserWidget,public IStackStateInterface
 	virtual void ExitState(EStackAction StackAction) override;
 public:
 
-	
+	virtual void OnReceivePlayerStateReplicated(APawn* Pawn);
 	virtual void InitUIState();
 
 	virtual void BeginDestroy() override;
@@ -42,6 +43,5 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void K2_OnStateExit(EStackAction StackAction);
-
-        
+	
 };

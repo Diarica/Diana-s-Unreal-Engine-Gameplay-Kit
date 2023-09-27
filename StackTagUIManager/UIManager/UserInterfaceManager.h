@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "GameplayMessageRuntime/GameplayMessageProcessor.h"
+#include "FLATCore/Framework/StackStateMachine/StackStateMachineComponent.h"
 #include "UObject/Object.h"
 #include "UserInterfaceManager.generated.h"
 
@@ -11,14 +13,16 @@ class UUI_State;
 /**
  * 
  */
-UCLASS()
-class FLATLINE_API UUserInterfaceManager : public UStackStateMachineComponent
+UCLASS(BlueprintType, Blueprintable,
+	meta=(BlueprintSpawnableComponent, ShortTooltip =
+		"UI Manager"))
+class FLATCORE_API UUserInterfaceManager : public UStackStateMachineComponent
 {
 	GENERATED_BODY()
 
 	UUserInterfaceManager();
 public:
-	UFUNCTION(BlueprintNativeEvent,Category="UI Manager")
+	UFUNCTION(BlueprintCallable,Category="UI Manager")
 	void InitUIStates();
 
 	UFUNCTION(BlueprintPure,Category="UI Manager")
@@ -32,7 +36,10 @@ public:
 virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	//end 
+	//end
+
+	void OnControllerPlayerStateReplicated(APawn* Pawn);
+
 
 	
 
@@ -44,6 +51,7 @@ private:
 
 	UPROPERTY()
 	TMap<FGameplayTag,UUI_State*> UIInstances;
+
 	
 	
 };

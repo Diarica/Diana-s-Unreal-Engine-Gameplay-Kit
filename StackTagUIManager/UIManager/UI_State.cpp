@@ -4,7 +4,6 @@
 #include "UI_State.h"
 
 
-
 void UUI_State::EnterState(EStackAction StackAction)
 {
 	K2_OnStateEnter(StackAction);
@@ -16,11 +15,13 @@ void UUI_State::ExitState(EStackAction StackAction)
 	K2_OnStateExit(StackAction);
 }
 
+void UUI_State::OnReceivePlayerStateReplicated(APawn* Pawn)
+{
+}
+
 void UUI_State::InitUIState()
 {
-	
-	
-	K2_InitUIState(Processor);
+	K2_InitUIState();
 }
 
 void UUI_State::BeginDestroy()
@@ -45,8 +46,11 @@ void UUI_State::NativeDestruct()
 void UUI_State::FinishDestroy()
 {
 	Super::FinishDestroy();
-
-        
+	
+	/*for (const auto& Element : ListenerHandles)
+	{
+		CachedMessageProcessor->UnregisterListener(Element);
+	}*/
 }
 
 void UUI_State::K2_OnStateEnter_Implementation(EStackAction StackAction)

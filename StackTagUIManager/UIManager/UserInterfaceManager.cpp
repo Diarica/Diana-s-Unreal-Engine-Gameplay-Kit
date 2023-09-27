@@ -1,10 +1,13 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UserInterfaceManager.h"
+
+#include "UI_State.h"
 #include "GameFramework/PlayerController.h"
 #include "Blueprint/UserWidget.h"
+#include "GameplayMessageRuntime/GameplayMessageProcessor.h"
 
-void UUserInterfaceManager::InitUIStates_Implementation()
+void UUserInterfaceManager::InitUIStates()
 {
 	check(GetOwner())
 	APlayerController* PlayerController = CastChecked<APlayerController>(GetOwner());
@@ -25,7 +28,7 @@ void UUserInterfaceManager::InitUIStates_Implementation()
 		
 		UIInstances.Add(Element.Key,State);
 		State->SetOwningPlayer(PlayerController);
-		State->InitUIState(GetOwner()->FindComponentByClass<UGameplayMessageProcessor>());
+		State->InitUIState();
 
 		
 	}
@@ -66,13 +69,17 @@ void UUserInterfaceManager::PushUIState(FGameplayTag StateTag)
 void UUserInterfaceManager::BeginPlay()
 {
 	Super::BeginPlay();
-	if(Cast<APlayerController>(GetOwner())->IsLocalController())
-	{
-		InitUIStates();
-	}
 }
 
 void UUserInterfaceManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
+}
+
+void UUserInterfaceManager::OnControllerPlayerStateReplicated(APawn* Pawn)
+{
+	for (const auto& Element : UIInstances)
+	{
+		Element.Value->OnReceivePlayerStateReplicated(Pawn);
+	}
 }
