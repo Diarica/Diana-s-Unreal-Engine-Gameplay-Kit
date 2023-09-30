@@ -43,5 +43,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void K2_OnStateExit(EStackAction StackAction);
+
+
 	
 };

@@ -6,12 +6,37 @@
 
 void UUI_State::EnterState(EStackAction StackAction)
 {
+	if(StackAction == EStackAction::Push)
+	{
+		
+		AddToViewport();
+		
+	}
+	else
+		if(StackAction == EStackAction::Pop)
+		{
+			SetVisibility(ESlateVisibility::Visible);
+		}
+
+
+	
 	K2_OnStateEnter(StackAction);
 	
 }
 
 void UUI_State::ExitState(EStackAction StackAction)
 {
+	if(StackAction == EStackAction::Push)
+	{
+		SetVisibility(ESlateVisibility::Hidden);
+		
+	}
+	else
+		if(StackAction == EStackAction::Pop)
+		{
+			RemoveFromParent();
+		
+		}
 	K2_OnStateExit(StackAction);
 }
 
@@ -53,36 +78,17 @@ void UUI_State::FinishDestroy()
 	}*/
 }
 
+
 void UUI_State::K2_OnStateEnter_Implementation(EStackAction StackAction)
 {
-	if(StackAction == EStackAction::Push)
-	{
-		
-		AddToViewport();
-		
-	}
-	else
-	if(StackAction == EStackAction::Pop)
-	{
-		SetVisibility(ESlateVisibility::Visible);
-	}
+	
 	
 
 }
 
 void UUI_State::K2_OnStateExit_Implementation(EStackAction StackAction)
 {
-	if(StackAction == EStackAction::Push)
-	{
-		SetVisibility(ESlateVisibility::Hidden);
-		
-	}
-	else
-	if(StackAction == EStackAction::Pop)
-	{
-		RemoveFromParent();
-		
-	}
+	
 
 
 }
