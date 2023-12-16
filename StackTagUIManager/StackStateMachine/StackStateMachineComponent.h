@@ -6,17 +6,12 @@
 #include "StackStateMachineComponent.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStackStatePushPopSignature, TScriptInterface<IStackStateInterface>,
-                                            State);
 
-DECLARE_LOG_CATEGORY_EXTERN(LogStateMachine, Log, All)
-
-DECLARE_LOG_CATEGORY_EXTERN(LogStackStateMachine, Log, All)
 
 UCLASS(BlueprintType, Blueprintable,
-	meta=(BlueprintSpawnableComponen, ShortTooltip =
-		"StateStateMachineComponent,Can Use in Any Actor"))
-class UStackStateMachineComponent : public UActorComponent, public IStackStateInterface
+	meta=(BlueprintSpawnableComponent, ShortTooltip =
+		"StateStateMachineComponent,Can Use in Any Actor,depend on StateStackMachine"))
+class FLATCORE_API UStackStateMachineComponent : public UActorComponent, public IStackStateInterface
 {
 	GENERATED_BODY()
 
@@ -87,6 +82,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="StackStateMachine")
 	FORCEINLINE float GetCurrentStateTime() const { return CurrentStateTime; }
+
 
 protected:
 	virtual void StatePushed(TScriptInterface<IStackStateInterface> PushedState);

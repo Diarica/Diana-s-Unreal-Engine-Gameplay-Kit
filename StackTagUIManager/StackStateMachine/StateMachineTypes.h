@@ -20,3 +20,9 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStateEnterSignature);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStateExitSignature);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStackStatePushPopSignature, TScriptInterface<IStackStateInterface>,
+											State);
+
+DECLARE_LOG_CATEGORY_EXTERN(LogStateMachine, Log, All)
+
+DECLARE_LOG_CATEGORY_EXTERN(LogStackStateMachine, Log, All)

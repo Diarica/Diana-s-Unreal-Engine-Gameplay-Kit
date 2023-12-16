@@ -40,9 +40,6 @@ void UUI_State::ExitState(EStackAction StackAction)
 	K2_OnStateExit(StackAction);
 }
 
-void UUI_State::OnReceivePlayerStateReplicated(APawn* Pawn)
-{
-}
 
 void UUI_State::InitUIState()
 {

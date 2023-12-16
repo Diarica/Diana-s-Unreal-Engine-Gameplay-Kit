@@ -19,12 +19,10 @@ class FLATCORE_API UUI_State : public UUserWidget,public IStackStateInterface
 {
 	GENERATED_BODY()
 
-
+protected:
 	virtual void EnterState(EStackAction StackAction) override;
 	virtual void ExitState(EStackAction StackAction) override;
 public:
-
-	virtual void OnReceivePlayerStateReplicated(APawn* Pawn);
 	virtual void InitUIState();
 
 	virtual void BeginDestroy() override;

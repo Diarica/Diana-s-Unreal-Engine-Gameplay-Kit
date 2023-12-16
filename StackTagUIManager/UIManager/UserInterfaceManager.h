@@ -25,6 +25,12 @@ public:
 	UFUNCTION(BlueprintCallable,Category="UI Manager")
 	void InitUIStates();
 
+	UFUNCTION(BlueprintCallable,Category="UI Manager")
+	bool AddUIState(FGameplayTag Tag,TSubclassOf<UUI_State> StateClass);
+
+	UFUNCTION(BlueprintCallable,Category="UI Manager")
+	bool RemoveUIState(FGameplayTag Tag);
+	
 	UFUNCTION(BlueprintPure,Category="UI Manager")
 	UUI_State* GetUI(FGameplayTag Tag);
 
@@ -38,7 +44,6 @@ virtual void BeginPlay() override;
 
 	//end
 
-	void OnControllerPlayerStateReplicated(APawn* Pawn);
 
 
 	
@@ -50,7 +55,7 @@ private:
 	TMap<FGameplayTag,TSubclassOf<UUI_State>> StatesToInitialize;
 
 	UPROPERTY()
-	TMap<FGameplayTag,UUI_State*> UIInstances;
+	TMap<FGameplayTag,UUI_State*> UIInstancesMap;
 
 	
 	

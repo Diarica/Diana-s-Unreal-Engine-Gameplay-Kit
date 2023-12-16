@@ -7,10 +7,17 @@
 #include "Blueprint/UserWidget.h"
 #include "GameplayMessageRuntime/GameplayMessageProcessor.h"
 
+UUserInterfaceManager::UUserInterfaceManager()
+{
+	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.SetTickFunctionEnable(false);
+}
+
+
 void UUserInterfaceManager::InitUIStates()
 {
 	check(GetOwner())
-	APlayerController* PlayerController = CastChecked<APlayerController>(GetOwner());
+	
 
 	
 	
@@ -22,27 +29,47 @@ void UUserInterfaceManager::InitUIStates()
 			return;
 		}
 
-		
-		UUI_State* State = CreateWidget<UUI_State>(PlayerController,Element.Value);
-		check(State)
-		
-		UIInstances.Add(Element.Key,State);
-		State->SetOwningPlayer(PlayerController);
-		State->InitUIState();
-
+		AddUIState(Element.Key,Element.Value);
 		
 	}
 }
 
-UUserInterfaceManager::UUserInterfaceManager()
+bool UUserInterfaceManager::AddUIState(FGameplayTag Tag, TSubclassOf<UUI_State> StateClass)
 {
-	PrimaryComponentTick.bCanEverTick = false;
-	PrimaryComponentTick.SetTickFunctionEnable(false);
+	if(Tag.IsValid() == false || StateClass == nullptr)
+	{
+		return false;
+	}
+	APlayerController* PlayerController = CastChecked<APlayerController>(GetOwner());
+	
+	UUI_State* State = CreateWidget<UUI_State>(PlayerController,StateClass);
+	check(State)
+		
+	UIInstancesMap.Add(Tag,State);
+	State->SetOwningPlayer(PlayerController);
+	State->InitUIState();
+
+	return true;
+	
 }
+
+bool UUserInterfaceManager::RemoveUIState(FGameplayTag Tag)
+{
+	if(const auto* InstancePtr = UIInstancesMap.Find(Tag))
+	{
+		auto* Ins = *InstancePtr;
+		Ins->RemoveFromParent();
+		UIInstancesMap.Remove(Tag);
+		return true;
+	}
+	return false;
+}
+
+
 
 UUI_State* UUserInterfaceManager::GetUI(FGameplayTag Tag)
 {
-	if(UUI_State** StatePointer = UIInstances.Find(Tag))
+	if(UUI_State** StatePointer = UIInstancesMap.Find(Tag))
 	{
 		if(*StatePointer)
 		{
@@ -61,7 +88,6 @@ void UUserInterfaceManager::PushUIState(FGameplayTag StateTag)
 	
 	if(UUI_State* UI = GetUI(StateTag))
 	{
-		TScriptInterface<IStackStateInterface> Interface(UI);
 		PushState(UI);
 	}
 }
@@ -76,10 +102,3 @@ void UUserInterfaceManager::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-void UUserInterfaceManager::OnControllerPlayerStateReplicated(APawn* Pawn)
-{
-	for (const auto& Element : UIInstances)
-	{
-		Element.Value->OnReceivePlayerStateReplicated(Pawn);
-	}
-}

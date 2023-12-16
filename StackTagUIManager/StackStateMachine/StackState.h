@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class UStackState : public UObject, public IStackStateInterface
+class FLATCORE_API UStackState : public UObject, public IStackStateInterface
 {
 	GENERATED_BODY()
 

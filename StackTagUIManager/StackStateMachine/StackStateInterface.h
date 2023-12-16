@@ -15,7 +15,7 @@ class UStackStateInterface : public UInterface
 /**
  * 
  */
-class FLATLINE_API IStackStateInterface
+class FLATCORE_API IStackStateInterface
 {
 	GENERATED_BODY()
 
